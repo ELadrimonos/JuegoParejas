@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Matching game</title>
+    <script defer src="js/juego.js"></script>
+    <script src="js/guardado.js"></script>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+    <section id="menu">
+        <h1>Encuentra las parejas</h1>
+        <form id="formulario">
+            <label for="filas">Número de filas</label>
+            <input type="number" id="filas" min="1" max="3" step="1" value="2">
+            <label for="columnas">Número de columnas</label>
+            <input type="number" id="columnas" min="2" max="10" step="2" value="4">
+            <label for="dificultad">Nivel de dificultad</label>
+            <select id="dificultad">
+                <option value="0">Casual (errores infinitos)</option>
+                <option value="1">Intermedio (6 errores)</option>
+                <option value="2">Avanzado (3 errores)</option>
+                <option value="3">Extremo (1 error)</option>
+                <option value="4">Quiero sufrir (sin errores)</option>
+            </select>
+            <input type="submit" value="Empezar">
+        </form>
+    </section>
+    <section id="tablero">
+
+    </section>
+    <footer>
+        <div id="ui">
+            <h2 id="textoErrores">Errores: 0/0</h2>
+            <button onclick="volverAlMenu()">Salir</button>
+            <h2 id="textoTiempo">Tiempo: 00:00</h2>
+        </div>
+    </footer>
+    <script>
+        document.getElementById("formulario").addEventListener('submit', e => {
+            e.preventDefault();
+            let filas = parseInt(document.getElementById('filas').value);
+            let columnas = parseInt(document.getElementById('columnas').value);
+            
+            if (columnas === 2 && filas === 1){
+                let respuesta = prompt("Realmente quieres jugar así?");
+                if (!respuesta.toLowerCase().includes('si'))
+                    return respuesta;
+            }
+            //TODO Función para comprobar los datos actuales y antiguos
+            if (columnas % 2 === 0){
+                let pregunta;
+                if (localStorage.getItem('tableroActual') !== undefined)
+                    if (comprobarDatosGuardados()){
+                        pregunta = confirm("Continuar tu anterior partida?");
+                        if (!pregunta)
+                            empezarNuevaPartida(filas, columnas);
+                        else{
+                            cargado()
+                            let filasAnteriores = tablero.length;
+                            let columnasAnteriores = tablero[0].length;
+                            dibujarTablero(filasAnteriores,columnasAnteriores)
+                        }
+                    } else{
+                        empezarNuevaPartida(filas, columnas);
+                    }
+
+            } else{
+                // En teoría no debería llegar aquí ya que steps se encarga de que sea par
+                alert('Las columnas deben de ser pares.')
+            }
+            
+        })
+    </script>
+</body>
+</html>

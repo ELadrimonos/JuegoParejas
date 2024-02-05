@@ -1,0 +1,197 @@
+#tablero{
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    /*justify-content: space-around;*/
+    width: 100%;
+    gap: 20px;
+    justify-items: center;
+    margin: auto;
+    visibility: hidden;
+    display: grid;
+    height: 75%;
+    align-items: center;
+}
+
+*{
+    font-family: sans-serif;
+}
+
+#menu, #menu>form{
+    display: flex;
+    flex-direction: column;
+    z-index: 500;
+    gap: 30px;
+}
+
+#menu>form>label{
+    font-size: 1.5em;
+}
+
+#menu>form>input[type=submit]{
+    font-size: 1.5em;
+    width: fit-content;
+    margin: auto;
+    padding: 10px;
+    cursor: pointer;
+
+    background-color: #5e3e0e;
+    color: white;
+    font-family: Irish, sans-serif;
+    border-radius: 45%;
+    border: outset #362308 5px;
+}
+
+#menu>form>input[type=submit]:hover{
+    color: #989898;
+    background-color: #362811;
+
+}
+
+#menu{
+    margin: auto;
+    width: 25%;
+    backdrop-filter: blur(6px);
+    border-radius: 10%;
+    padding: 10px 50px;
+    color: white;
+
+}
+
+#menu > h1{
+    margin: 15px;
+    text-align: center;
+    font-size: 3em;
+    font-family: Irish, sans-serif;
+}
+
+body{
+    margin: 0;
+    overflow-y: hidden;
+    background-image: url("img/pub.png");
+    backdrop-filter: blur(3px);
+    background-repeat: no-repeat;
+    background-size: cover;
+    image-rendering: smooth;
+    height: 100vh;
+}
+
+body.partida{
+    background-image: url("img/mesa.jpg");
+
+}
+
+.fila{
+    justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+}
+
+.carta {
+    width: 120px;
+    aspect-ratio: 1/1.5;
+    transition: 500ms;
+    border: 1px solid black;
+    cursor: pointer;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-origin: content-box;
+    border-radius: 4px;
+    image-rendering: smooth;
+
+}
+
+.carta.abierta{
+    background-color: white;
+    cursor: auto;
+    transform: rotateY(180deg) rotateX(0deg) perspective(0px);
+    font-family: sans-serif;
+    font-size: 3rem;
+
+}
+
+
+footer{
+    position: absolute;
+    bottom: -70px;
+    height: 100px;
+    width: 99%;
+    display: flex;
+    justify-content: center;
+    transition: 200ms;
+    z-index: 100;
+}
+
+footer:hover{
+    bottom: 0;
+    #ui{
+        background-position-y: -280px;
+        filter: none;
+    }
+}
+
+#ui{
+    filter: blur(2px);
+    border-radius: 30px 30px 0 0;
+    background-image: url("img/shelf.webp");
+    transition: 200ms;
+    color: white;
+    background-size: 100%;
+    width: 50%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    visibility: hidden;
+    user-select: none;
+}
+
+#ui > button{
+    cursor: pointer;
+    width: 200px;
+    font-size: 1.6em;
+    background-color: #d52121;
+    color: white;
+    border: outset 2px #770000;
+    font-weight: bold;
+}
+
+#ui > button:hover{
+    border-width: 5px;
+    background-color: #770000;
+}
+
+#ui > h2 {
+    backdrop-filter: blur(8px);
+    padding: 5px;
+    border-radius: 15px;
+}
+
+#consecutivas{
+    font-family: SpeedWay, sans-serif;
+    color: #ffc400;
+    font-weight: bold;
+    position: absolute;
+    font-size: 3rem;
+    left: calc(35%);
+    top: calc(45%);
+    user-select: none;
+    user-focus: none;
+    z-index: 600;
+    text-shadow: 2px 0 #ff8000, -10px 0 #ff0000, 0 2px #ff0000, 0 -2px #ff8000;
+}
+
+@font-face {
+    font-family: Irish;
+    src: url("fonts/IrishUncialfabeta-Bold.ttf");
+}
+
+@font-face {
+    font-family: SpeedWay;
+    src: url("fonts/Speedway.ttf");
+}
+
+@media screen and (width < 600px) and (orientation: portrait){
+    #menu, #menu>form{
+        gap: 10px;
+        font-size: 0.9em;
+    }
+}
