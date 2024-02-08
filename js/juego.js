@@ -243,7 +243,7 @@ function abrirCarta(carta) {
           dibujarErrores();
           elementosClicados = [];
 
-          if (numErrores >= maxErrores && parseInt(maxErrores) !== -1) {
+          if (numErrores > maxErrores && parseInt(maxErrores) !== -1) {
             alert("Has perdido :(")
             volverAlMenu();
           }
