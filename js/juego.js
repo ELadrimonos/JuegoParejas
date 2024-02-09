@@ -6,6 +6,7 @@ const elementoTiempo = document.getElementById("textoTiempo");
 const elementoErrores = document.getElementById("textoErrores");
 const elementoUI = document.getElementById("ui");
 const inputDificultad = document.getElementById("dificultad");
+const sfx = new Audio();
 
 
 let clics = 0;
@@ -26,6 +27,24 @@ let segundos;
 let minutos;
 
 let handlerConsecutivas;
+
+const reproducirSonido = (id) => {
+  const carpeta = './sfx/';
+  switch (id){
+    case 1:
+          sfx.src = carpeta + 'RespuestaCorrecta.mp3';
+          break;
+    case 2:
+          sfx.src = carpeta + 'Guitar.mp3';
+          break;
+    case 3:
+          sfx.src = carpeta + 'MuacMuac.mp3';
+          break;
+
+  }
+  sfx.play().then(r => sfx.currentTime = 0);
+
+}
 
 
 const dibujarTiempo = () => {
@@ -156,6 +175,7 @@ function volverAlMenu() {
   elementoTablero.style.visibility = 'hidden';
   elementoUI.style.visibility = 'hidden';
   document.getElementById('menu').style.visibility = 'visible';
+  document.getElementById('modal')?.remove();
   elementoTablero.innerHTML = '';
   document.body.classList.remove("partida");
 
@@ -185,7 +205,7 @@ function generarModalConsecutivas() {
     carta.innerText = consecutivas + " CONSECUTIVAS!!!";
     document.body.appendChild(carta)
   }
-
+  reproducirSonido(2)
   handlerConsecutivas = setTimeout(() => {carta.remove()}, 3000)
 }
 
@@ -212,6 +232,7 @@ function abrirCarta(carta) {
 
       if (tablero[indiceFila][indiceCol] === tablero[indiceFila2][indiceCol2]) {
         consecutivas++;
+        reproducirSonido(1);
         setTimeout(() => {
           cartaAdivinada(indiceFila, indiceCol);
           cartaAdivinada(indiceFila2, indiceCol2);
@@ -244,8 +265,7 @@ function abrirCarta(carta) {
           elementosClicados = [];
 
           if (numErrores > maxErrores && parseInt(maxErrores) !== -1) {
-            alert("Has perdido :(")
-            volverAlMenu();
+              perderPartida();
           }
           guardado()
 
@@ -273,4 +293,17 @@ const ganarPartida = () => {
   alert("HAS GANADO!!! VICTORIAS: " + victorias)
   jugando = false;
   volverAlMenu();
+}
+
+const perderPartida = () => {
+  jugando = false;
+
+  const modal = document.createElement('div');
+  modal.id = 'modal';
+  modal.innerHTML = `
+      <h1>HAS PERDIDO</h1>
+      <button onclick="volverAlMenu()">Regresar</button>
+`;
+  elementoTablero.appendChild(modal);
+  reproducirSonido(3)
 }
