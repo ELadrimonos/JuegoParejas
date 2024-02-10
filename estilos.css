@@ -22,7 +22,7 @@
     background: beige;
     padding: 20px;
     flex-direction: column;
-    font-size: 2.4em;
+    font-size: 1.4em;
 }
 
 #menu, #menu>form{
@@ -264,6 +264,10 @@ footer:hover{
 }
 
 @media screen and (width < 600px) and (orientation: portrait){
+    #seccionAudio{
+        width: 100%;
+        display: block;
+    }
     #menu, #menu>form{
         gap: 10px;
         font-size: 0.8em;
