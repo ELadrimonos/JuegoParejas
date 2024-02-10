@@ -7,7 +7,10 @@ const elementoErrores = document.getElementById("textoErrores");
 const elementoUI = document.getElementById("ui");
 const inputDificultad = document.getElementById("dificultad");
 const sfx = new Audio();
+const MAXSONIDO = 0.5;
 
+
+sfx.volume = MAXSONIDO;
 
 let clics = 0;
 let elementosClicados = [];
@@ -28,21 +31,43 @@ let minutos;
 
 let handlerConsecutivas;
 
+
+document.getElementById('controlSonido').addEventListener('change', () => {
+  sfx.volume = document.getElementById('controlSonido').value;
+  console.log('VOLUMEN CAMBIADO: ' + sfx.volume)
+});
+
 const reproducirSonido = (id) => {
   const carpeta = './sfx/';
+  let sonidoAlto = false;
   switch (id){
     case 1:
           sfx.src = carpeta + 'RespuestaCorrecta.mp3';
           break;
     case 2:
           sfx.src = carpeta + 'Guitar.mp3';
+        sonidoAlto = true;
+
           break;
     case 3:
           sfx.src = carpeta + 'MuacMuac.mp3';
+          sonidoAlto = true;
           break;
 
   }
-  sfx.play().then(r => sfx.currentTime = 0);
+  if (sonidoAlto){
+    console.log('BAJAR VOLUMEN: ' + sfx.volume)
+    sfx.volume /= 30;
+    console.log('BAJADO A VOLUMEN: ' + sfx.volume)
+  }
+
+  sfx.play().then(() => {
+    sfx.currentTime = 0;
+  });
+
+  sfx.onended = () => {
+    if (sonidoAlto) sfx.volume *= 30;
+  };
 
 }
 
@@ -160,8 +185,8 @@ function dibujarTablero(f, c) {
     indiceCol++;
 
   }
-  elementoTablero.style.visibility = 'visible';
-  document.getElementById('menu').style.visibility = 'collapse';
+  elementoTablero.style.display = 'grid';
+  document.getElementById('menu').style.display = 'none';
   guardado()
 
 }
@@ -172,9 +197,9 @@ function volverAlMenu() {
   jugando = false;
   puedeClickear = true;
   clearInterval(intervaloTiempo)
-  elementoTablero.style.visibility = 'hidden';
+  elementoTablero.style.display = 'none';
   elementoUI.style.visibility = 'hidden';
-  document.getElementById('menu').style.visibility = 'visible';
+  document.getElementById('menu').style.display = 'flex';
   document.getElementById('modal')?.remove();
   elementoTablero.innerHTML = '';
   document.body.classList.remove("partida");
@@ -290,20 +315,25 @@ function cartaAdivinada(fila, columna) {
 
 const ganarPartida = () => {
   victorias++;
-  alert("HAS GANADO!!! VICTORIAS: " + victorias)
-  jugando = false;
-  volverAlMenu();
+  document.getElementById('victorias').innerText = 'VICTORIAS: ' + victorias.toString();
+  dibujarModal('HAS GANADO!')
 }
 
-const perderPartida = () => {
+const dibujarModal = (mensaje) => {
   jugando = false;
 
   const modal = document.createElement('div');
   modal.id = 'modal';
   modal.innerHTML = `
-      <h1>HAS PERDIDO</h1>
+      <h1>${mensaje}</h1>
+      <h2>Numero de victorias: ${victorias}</h2>
       <button onclick="volverAlMenu()">Regresar</button>
 `;
   elementoTablero.appendChild(modal);
+}
+
+const perderPartida = () => {
+  dibujarModal('HAS PERDIDO!')
+
   reproducirSonido(3)
 }

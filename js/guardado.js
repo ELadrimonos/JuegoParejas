@@ -24,8 +24,6 @@ const desconcatenar = (cadena) => {
     }));
 }
 const cargado = () => {
-
-
     let datosGuardadosJugador = localStorage.getItem("tableroJugadorActual");
     let datosGuardadosTablero = localStorage.getItem("tableroActual");
 
@@ -64,4 +62,12 @@ const comprobarDatosGuardados = () => {
         return false;
     }
 
+}
+
+// Cargamos las victorias para el menu principal
+window.onload = () => {
+    if (parseInt(localStorage.getItem("victorias")) > 0){
+        victorias = parseInt(localStorage.getItem("victorias"));
+        document.getElementById('victorias').innerText = 'VICTORIAS: ' + victorias.toString();
+    }
 }
