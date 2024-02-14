@@ -39,35 +39,36 @@ document.getElementById('controlSonido').addEventListener('change', () => {
 
 const reproducirSonido = (id) => {
   const carpeta = './sfx/';
-  let sonidoAlto = false;
   switch (id){
     case 1:
           sfx.src = carpeta + 'RespuestaCorrecta.mp3';
           break;
+    case 0:
+          sfx.src = carpeta + 'match_start.mp3';
+          break;
     case 2:
           sfx.src = carpeta + 'Guitar.mp3';
-        sonidoAlto = true;
-
           break;
     case 3:
           sfx.src = carpeta + 'MuacMuac.mp3';
-          sonidoAlto = true;
           break;
-
-  }
-  if (sonidoAlto){
-    console.log('BAJAR VOLUMEN: ' + sfx.volume)
-    sfx.volume /= 30;
-    console.log('BAJADO A VOLUMEN: ' + sfx.volume)
+    case 4:
+          sfx.src = carpeta + 'click.mp3';
+          break;
+    case 5:
+          sfx.src = carpeta + 'fail.mp3';
+          break;
+    case 6:
+          const victoria = 'victory/';
+          const extension = '.mp3';
+          sfx.src = carpeta + victoria + Math.floor(Math.random() * 7) + extension;
+          break;
   }
 
   sfx.play().then(() => {
     sfx.currentTime = 0;
   });
 
-  sfx.onended = () => {
-    if (sonidoAlto) sfx.volume *= 30;
-  };
 
 }
 
@@ -149,6 +150,7 @@ function empezarNuevaPartida(f, c) {
 }
 
 function dibujarTablero(f, c) {
+  reproducirSonido(0)
   document.body.classList.add("partida");
   jugando = true;
   elementoUI.style.visibility = 'visible';
@@ -291,7 +293,7 @@ function abrirCarta(carta) {
 
           if (numErrores > maxErrores && parseInt(maxErrores) !== -1) {
               perderPartida();
-          }
+          } else reproducirSonido(5)
           guardado()
 
         }, 1000);
@@ -299,6 +301,9 @@ function abrirCarta(carta) {
       }
       clics = 0;
 
+    }
+    else{
+      reproducirSonido(4)
     }
   }
 }
@@ -315,6 +320,7 @@ function cartaAdivinada(fila, columna) {
 
 const ganarPartida = () => {
   victorias++;
+  reproducirSonido(6)
   document.getElementById('victorias').innerText = 'VICTORIAS: ' + victorias.toString();
   dibujarModal('HAS GANADO!')
 }

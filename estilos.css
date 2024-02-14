@@ -23,6 +23,7 @@
     padding: 20px;
     flex-direction: column;
     font-size: 1.4em;
+    bottom: 0;
 }
 
 #menu, #menu>form{
@@ -145,6 +146,11 @@ body.partida{
 
 }
 
+.carta:not(.abierta):hover, .carta:not(.abierta):active{
+    outline: 5px yellow solid;
+    outline-offset: 10px;
+}
+
 .carta.abierta{
     background-color: white;
     cursor: auto;
@@ -235,12 +241,19 @@ footer:hover{
 }
 
 @media screen and (width < 900px){
+    #seccionAudio{
+        top: 0;
+        bottom: auto;
+        position: relative;
+    }
+    /*TODO Arreglar scroller Y*/
     #tablero{
         display: flex;
         flex-flow: row wrap;
         height: 86vh;
         overflow-y: scroll;
         justify-content: center;
+        max-width: 100%;
     }
     body{
         height: 100%;
@@ -266,7 +279,6 @@ footer:hover{
 @media screen and (width < 600px) and (orientation: portrait){
     #seccionAudio{
         width: 100%;
-        display: block;
     }
     #menu, #menu>form{
         gap: 10px;
