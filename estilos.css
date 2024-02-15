@@ -172,7 +172,7 @@ footer{
     z-index: 100;
 }
 
-footer:hover{
+footer:hover, footer.focused{
     bottom: 0;
     #ui{
         background-position-y: -280px;
@@ -205,10 +205,12 @@ footer:hover{
     font-weight: bold;
 }
 
-#ui > button:hover{
+#ui > button:hover, #ui > button:focus{
     border-width: 5px;
     background-color: #770000;
 }
+
+
 
 #ui > h2 {
     backdrop-filter: blur(8px);

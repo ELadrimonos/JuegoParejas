@@ -6,6 +6,8 @@ const elementoTiempo = document.getElementById("textoTiempo");
 const elementoErrores = document.getElementById("textoErrores");
 const elementoUI = document.getElementById("ui");
 const inputDificultad = document.getElementById("dificultad");
+const botonSalir = document.getElementById('botonSalir');
+const footer = document.getElementById('footer');
 const sfx = new Audio();
 const MAXSONIDO = 0.5;
 
@@ -30,6 +32,16 @@ let segundos;
 let minutos;
 
 let handlerConsecutivas;
+
+botonSalir.addEventListener('focus', function() {
+  footer.classList.add('focused');
+});
+
+botonSalir.addEventListener('blur', function() {
+  footer.classList.remove('focused');
+});
+
+
 
 
 document.getElementById('controlSonido').addEventListener('change', () => {
