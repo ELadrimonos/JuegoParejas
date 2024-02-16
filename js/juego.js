@@ -33,6 +33,42 @@ let minutos;
 
 let handlerConsecutivas;
 
+
+// Variables de controles por teclado
+let cartaActual = [0,0];
+let moverPorTeclado = false;
+let timerDesactivarTeclado;
+
+document.addEventListener('keypress', (e) => {
+  if (jugando){
+    moverPorTeclado = true;
+    clearTimeout(timerDesactivarTeclado);
+    switch (e.key) {
+      case 'ArrowRight':
+        if (cartaActual[1] < tablero[0].length)
+          cartaActual[1]++;
+        else {
+          cartaActual[0]++;
+          cartaActual[1] = 0;
+        }
+        break;
+      case 'ArrowLeft':
+        if (cartaActual[1] - 1 >= 0)
+          cartaActual[1]--;
+        else if (cartaActual[0] > 0){
+          cartaActual[0]--;
+          cartaActual[1] = 0;
+        }
+        break;
+
+    }
+    console.log(cartaActual)
+    timerDesactivarTeclado = setTimeout(() => moverPorTeclado = false, 5000);
+  }
+
+})
+
+
 botonSalir.addEventListener('focus', function() {
   footer.classList.add('focused');
 });
@@ -170,6 +206,7 @@ function dibujarTablero(f, c) {
   dibujarErrores();
   intervaloTiempo = setInterval(dibujarTiempo, 1000);
   consecutivas = 0;
+  cartaActual = 0;
   elementoTablero.style.gridTemplateColumns = 'repeat(' + c + ', auto)';
   elementoTablero.style.gridTemplateRows = 'repeat(' + f + ', auto)';
 
