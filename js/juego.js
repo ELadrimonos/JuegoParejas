@@ -42,17 +42,22 @@ let timerDesactivarTeclado;
 document.addEventListener('keypress', (e) => {
   if (jugando){
     moverPorTeclado = true;
+    let movimiento = false;
+    const cartaAnterior = document.getElementById(cartaActual[0] + "," + cartaActual[1])
     clearTimeout(timerDesactivarTeclado);
     switch (e.key) {
-      case 'ArrowRight':
-        if (cartaActual[1] < tablero[0].length)
+      case 'd':
+        movimiento = true;
+        if (cartaActual[1] < tablero[0].length - 1)
           cartaActual[1]++;
-        else {
+        else if (cartaActual[0] < tablero.length - 1){
           cartaActual[0]++;
           cartaActual[1] = 0;
         }
         break;
-      case 'ArrowLeft':
+      case 'a':
+        movimiento = true;
+
         if (cartaActual[1] - 1 >= 0)
           cartaActual[1]--;
         else if (cartaActual[0] > 0){
@@ -60,10 +65,35 @@ document.addEventListener('keypress', (e) => {
           cartaActual[1] = 0;
         }
         break;
+      case 's':
+        movimiento = true;
+
+        if (cartaActual[0] < tablero.length - 1){
+          cartaActual[0]++;
+        }
+        break;
+      case 'w':
+        movimiento = true;
+
+        if (cartaActual[0] > 0){
+          cartaActual[0]--;
+        }
+        break;
+      case 'e':
+      case 'Enter':
+        abrirCarta(cartaAnterior);
+        break;
 
     }
-    console.log(cartaActual)
-    timerDesactivarTeclado = setTimeout(() => moverPorTeclado = false, 5000);
+    const carta = document.getElementById(cartaActual[0] + "," + cartaActual[1]);
+    if (movimiento){
+      cartaAnterior.classList.remove('focused');
+      carta.classList.add('focused');
+    }
+    timerDesactivarTeclado = setTimeout(() => {
+      moverPorTeclado = false;
+      carta.classList.remove('focused');
+    }, 5000);
   }
 
 })
@@ -141,10 +171,10 @@ function empezarNuevaPartida(f, c) {
       maxErrores = -1;
       break;
     case '1':
-      maxErrores = 6;
+      maxErrores = 10;
       break;
     case '2':
-      maxErrores = 3;
+      maxErrores = 4;
       break;
     case '3':
       maxErrores = 1;
@@ -164,7 +194,6 @@ function empezarNuevaPartida(f, c) {
     tablero[i] = new Array(c).fill(null);
     tableroJugador[i] = new Array(c).fill(false);
   }
-  console.log("TABLERO JUGADOR CREADO: " , tableroJugador)
 
   const arrayValores = new Set;
 
@@ -206,7 +235,7 @@ function dibujarTablero(f, c) {
   dibujarErrores();
   intervaloTiempo = setInterval(dibujarTiempo, 1000);
   consecutivas = 0;
-  cartaActual = 0;
+  cartaActual = [0,0];
   elementoTablero.style.gridTemplateColumns = 'repeat(' + c + ', auto)';
   elementoTablero.style.gridTemplateRows = 'repeat(' + f + ', auto)';
 
@@ -286,13 +315,18 @@ function generarModalConsecutivas() {
 }
 
 function abrirCarta(carta) {
-  if (puedeClickear && elementosClicados[0] !== carta) {
+  let indices = carta.id.split(',')
+  let indiceFila = indices[0]
+  let indiceCol = indices[1]
+
+  let noAdivinada = !tableroJugador[indiceFila][indiceCol];
+
+
+  if (puedeClickear && elementosClicados[0] !== carta && noAdivinada) {
     carta.classList.toggle("abierta");
+    carta.classList.remove("focused");
     elementosClicados.push(carta);
 
-    let indices = carta.id.split(',')
-    let indiceFila = indices[0]
-    let indiceCol = indices[1]
 
     clics++;
     setTimeout(() => {
@@ -316,7 +350,6 @@ function abrirCarta(carta) {
           elementosClicados = [];
           let todoCorrecto = todosAdivinados(tableroJugador)
           console.log("Todo correcto?: " + todoCorrecto)
-          console.log(tableroJugador)
           if (todoCorrecto) ganarPartida();
           else {
             guardado()
@@ -384,7 +417,7 @@ const dibujarModal = (mensaje) => {
       <h2>Numero de victorias: ${victorias}</h2>
       <button onclick="volverAlMenu()">Regresar</button>
 `;
-  elementoTablero.appendChild(modal);
+  document.body.appendChild(modal);
 }
 
 const perderPartida = () => {

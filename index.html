@@ -22,8 +22,8 @@
             <label for="dificultad">Nivel de dificultad</label>
             <select id="dificultad">
                 <option value="0">Casual (errores infinitos)</option>
-                <option value="1">Intermedio (6 errores)</option>
-                <option value="2">Avanzado (3 errores)</option>
+                <option value="1">Intermedio (10 errores)</option>
+                <option value="2">Avanzado (4 errores)</option>
                 <option value="3">Extremo (1 error)</option>
                 <option value="4">Quiero sufrir (sin errores)</option>
             </select>
@@ -51,7 +51,6 @@
                 if (!respuesta.toLowerCase().includes('si'))
                     return respuesta;
             }
-            //TODO Función para comprobar los datos actuales y antiguos
             if (columnas % 2 === 0){
                 let pregunta;
                 if (localStorage.getItem('tableroActual') !== undefined)
