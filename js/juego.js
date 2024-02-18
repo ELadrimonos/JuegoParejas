@@ -42,6 +42,7 @@ let timerDesactivarTeclado;
 document.addEventListener('keypress', (e) => {
   if (jugando){
     moverPorTeclado = true;
+    if (!document.getElementById('controles')) dibujarControlesTeclado();
     let movimiento = false;
     const cartaAnterior = document.getElementById(cartaActual[0] + "," + cartaActual[1])
     clearTimeout(timerDesactivarTeclado);
@@ -93,6 +94,7 @@ document.addEventListener('keypress', (e) => {
     timerDesactivarTeclado = setTimeout(() => {
       moverPorTeclado = false;
       carta.classList.remove('focused');
+      document.getElementById('controles').remove();
     }, 5000);
   }
 
@@ -283,6 +285,7 @@ function volverAlMenu() {
   document.getElementById('modal')?.remove();
   elementoTablero.innerHTML = '';
   document.body.classList.remove("partida");
+  document.getElementById('controles').remove();
 
 }
 
@@ -424,4 +427,17 @@ const perderPartida = () => {
   dibujarModal('HAS PERDIDO!')
 
   reproducirSonido(3)
+}
+
+const dibujarControlesTeclado = () => {
+  const contenedor = document.createElement('div');
+  contenedor.id = 'controles';
+  const titulo = document.createElement('h1');
+  titulo.innerText = 'Controles por teclado'
+  const texto = document.createElement('p');
+  texto.innerText = 'Navegar cartas -> WASD\nSeleccionar carta -> E/Enter\nSalir de la partida -> TAB';
+
+  contenedor.appendChild(titulo);
+  contenedor.appendChild(texto);
+  document.body.appendChild(contenedor);
 }
