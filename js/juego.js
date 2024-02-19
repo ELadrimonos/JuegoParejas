@@ -54,7 +54,8 @@ document.addEventListener('keypress', (e) => {
         else if (cartaActual[0] < tablero.length - 1){
           cartaActual[0]++;
           cartaActual[1] = 0;
-        }
+        } else if (cartaActual[0] === tablero.length - 1 && cartaActual[1] === tablero[0].length - 1)
+          cartaActual = [0,0];
         break;
       case 'a':
         movimiento = true;
@@ -63,8 +64,9 @@ document.addEventListener('keypress', (e) => {
           cartaActual[1]--;
         else if (cartaActual[0] > 0){
           cartaActual[0]--;
-          cartaActual[1] = 0;
-        }
+          cartaActual[1] = tablero[0].length - 1;
+        } else if (cartaActual[0] === 0 && cartaActual[1] === 0)
+          cartaActual = [tablero.length - 1, tablero[0].length - 1];
         break;
       case 's':
         movimiento = true;
