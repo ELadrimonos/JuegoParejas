@@ -11,8 +11,8 @@ const footer = document.getElementById('footer');
 const sfx = new Audio();
 const MAXSONIDO = 0.5;
 
-
-sfx.volume = MAXSONIDO;
+document.getElementById('controlSonido').maxValue = MAXSONIDO;
+sfx.volume = document.getElementById('controlSonido').value;
 
 let clics = 0;
 let elementosClicados = [];
@@ -73,6 +73,8 @@ document.addEventListener('keypress', (e) => {
 
         if (cartaActual[0] < tablero.length - 1){
           cartaActual[0]++;
+        } else if (cartaActual[0] === tablero.length - 1){
+          cartaActual[0] = 0;
         }
         break;
       case 'w':
@@ -80,6 +82,8 @@ document.addEventListener('keypress', (e) => {
 
         if (cartaActual[0] > 0){
           cartaActual[0]--;
+        } else if (cartaActual[0] === 0){
+          cartaActual[0] = tablero.length - 1;
         }
         break;
       case 'e':
