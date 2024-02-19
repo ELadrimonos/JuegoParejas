@@ -261,12 +261,16 @@ footer:hover, footer.focused{
 @media screen and (width < 900px){
     #seccionAudio{
         top: 0;
+        left: 2.5%;
         bottom: auto;
+        width: 80% !important;
         position: relative;
     }
-    /*TODO Arreglar scroller Y*/
+    #controlSonido{
+        width: 50%;
+    }
     #tablero{
-        display: flex;
+        display: flex !important;
         flex-flow: row wrap;
         height: 86vh;
         overflow-y: scroll;

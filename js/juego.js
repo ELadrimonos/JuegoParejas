@@ -241,6 +241,10 @@ function dibujarTablero(f, c) {
   elementoTablero.style.gridTemplateColumns = 'repeat(' + c + ', auto)';
   elementoTablero.style.gridTemplateRows = 'repeat(' + f + ', auto)';
 
+  clics = 0;
+  elementosClicados = [];
+  puedeClickear = true;
+
   let indiceFila = 0;
   let indiceCol = 0;
   for (let i = 0; i < (c * f); i++) {
@@ -285,7 +289,7 @@ function volverAlMenu() {
   document.getElementById('modal')?.remove();
   elementoTablero.innerHTML = '';
   document.body.classList.remove("partida");
-  document.getElementById('controles').remove();
+  document.getElementById('controles')?.remove();
 
 }
 
