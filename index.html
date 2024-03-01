@@ -4,30 +4,37 @@
     <meta charset="UTF-8">
     <title>Matching game</title>
     <script defer src="js/juego.js"></script>
+    <script defer src="js/traducciones.js"></script>
     <script src="js/guardado.js"></script>
     <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
     <div id="seccionAudio">
-    <label for="controlSonido">Volumen maestro: </label><input type="range" id="controlSonido" max="0.5" min="0" value="0.5" step="0.01">
+    <label for="controlSonido" data-i18n="labelControlarAudio"></label>
+        <input type="range" id="controlSonido" max="0.5" min="0" value="0.5" step="0.01">
     </div>
     <section id="menu">
-        <h1>Encuentra las parejas</h1>
-        <h2 id="victorias"></h2>
+        <h1 data-i18n="titulo"></h1>
+        <h2 id="victorias" data-i18n="victorias"></h2>
         <form id="formulario">
-            <label for="filas">Número de filas</label>
-            <input type="number" id="filas" min="1" max="3" step="1" value="2">
-            <label for="columnas">Número de columnas</label>
-            <input type="number" id="columnas" min="2" max="10" step="2" value="4">
-            <label for="dificultad">Nivel de dificultad</label>
-            <select id="dificultad">
-                <option value="0">Casual (errores infinitos)</option>
-                <option value="1">Intermedio (10 errores)</option>
-                <option value="2">Avanzado (4 errores)</option>
-                <option value="3">Extremo (1 error)</option>
-                <option value="4">Quiero sufrir (sin errores)</option>
+            <label for="idioma"></label>
+            <select id="idioma" onchange="changeLanguage()">
+                <option value="en">English</option>
+                <option value="es">Español</option>
             </select>
-            <input type="submit" value="Empezar">
+            <label for="filas" data-i18n="numFilas"></label>
+            <input type="number" id="filas" min="1" max="3" step="1" value="2">
+            <label for="columnas" data-i18n="numColumnas"></label>
+            <input type="number" id="columnas" min="2" max="10" step="2" value="4">
+            <label for="dificultad" data-i18n="dificultad"></label>
+            <select id="dificultad">
+                <option value="0" data-i18n="casual"></option>
+                <option value="1" data-i18n="intermedio"></option>
+                <option value="2" data-i18n="avanzado"></option>
+                <option value="3" data-i18n="extremo"></option>
+                <option value="4" data-i18n="imposible"></option>
+            </select>
+            <button type="submit" data-i18n="botonEmpezar"></button>
         </form>
     </section>
     <section id="tablero">
@@ -35,9 +42,9 @@
     </section>
     <footer id="footer">
         <div id="ui">
-            <h2 id="textoErrores">Errores: 0/0</h2>
-            <button onclick="volverAlMenu()" id="botonSalir">Salir</button>
-            <h2 id="textoTiempo">Tiempo: 00:00</h2>
+            <h2 id="textoErrores" data-i18n="errores"></h2>
+            <button onclick="volverAlMenu()" id="botonSalir" data-i18n="botonSalir"></button>
+            <h2 id="textoTiempo" data-i18n="textoTiempo"></h2>
         </div>
     </footer>
     <script>

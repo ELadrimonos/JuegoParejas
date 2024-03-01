@@ -165,11 +165,11 @@ const dibujarTiempo = () => {
     segundos = 0;
     minutos++;
   }
-  elementoTiempo.innerText = 'Tiempo: ' + (minutos < 10 ? '0' : '') + minutos + ':' + (segundos < 10 ? '0' : '') + segundos;
+  elementoTiempo.innerText = translations[currentLanguage]['textoTiempo'] + (minutos < 10 ? '0' : '') + minutos + ':' + (segundos < 10 ? '0' : '') + segundos;
 }
 
 const dibujarErrores = () => {
-  elementoErrores.innerHTML = 'Errores: ' + numErrores + '/' + (maxErrores === -1 ? '&#8734;' : maxErrores)
+  elementoErrores.innerHTML = translations[currentLanguage]['errores'] + numErrores + '/' + (maxErrores === -1 ? '&#8734;' : maxErrores);
 }
 
 function empezarNuevaPartida(f, c) {
@@ -286,6 +286,8 @@ function dibujarTablero(f, c) {
 
 function volverAlMenu() {
   guardado();
+  sfx.pause();
+  sfx.currentTime = 0;
   jugando = false;
   puedeClickear = true;
   clearInterval(intervaloTiempo)
@@ -416,25 +418,25 @@ function cartaAdivinada(fila, columna) {
 const ganarPartida = () => {
   victorias++;
   reproducirSonido(6)
-  document.getElementById('victorias').innerText = 'VICTORIAS: ' + victorias.toString();
-  dibujarModal('HAS GANADO!')
+  document.getElementById('victorias').innerText = translations[currentLanguage]['victorias'] + victorias.toString();
+  dibujarModal('mensajeVictoria')
 }
 
-const dibujarModal = (mensaje) => {
+const dibujarModal = (clave) => {
   jugando = false;
 
   const modal = document.createElement('div');
   modal.id = 'modal';
   modal.innerHTML = `
-      <h1>${mensaje}</h1>
-      <h2>Numero de victorias: ${victorias}</h2>
-      <button onclick="volverAlMenu()">Regresar</button>
+      <h1>${translations[currentLanguage][clave]}</h1>
+      <h2>${translations[currentLanguage]['modalVictorias']} ${victorias}</h2>
+      <button onclick="volverAlMenu()">${translations[currentLanguage]['regresar']}</button>
 `;
   document.body.appendChild(modal);
 }
 
 const perderPartida = () => {
-  dibujarModal('HAS PERDIDO!')
+  dibujarModal('mensajeDerrota')
 
   reproducirSonido(3)
 }
@@ -443,11 +445,14 @@ const dibujarControlesTeclado = () => {
   const contenedor = document.createElement('div');
   contenedor.id = 'controles';
   const titulo = document.createElement('h1');
-  titulo.innerText = 'Controles por teclado'
+  titulo.id = 'tituloTeclado';
   const texto = document.createElement('p');
-  texto.innerText = 'Navegar cartas -> WASD\nSeleccionar carta -> E/Enter\nSalir de la partida -> TAB';
+  texto.id = 'textoTeclado'
 
   contenedor.appendChild(titulo);
   contenedor.appendChild(texto);
   document.body.appendChild(contenedor);
+  document.getElementById('tituloTeclado').setAttribute('data-i18n', 'tituloTeclado');
+  document.getElementById('textoTeclado').setAttribute('data-i18n', 'textoTeclado');
+  applyTranslations()
 }
